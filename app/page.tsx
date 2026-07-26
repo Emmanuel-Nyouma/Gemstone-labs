@@ -51,7 +51,8 @@ type ChatMessage = {
 };
 
 const CHAT_API_URL =
-  process.env.NEXT_PUBLIC_CHAT_API_URL ?? "http://localhost:8000";
+  process.env.NEXT_PUBLIC_CHAT_API_URL ??
+  (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
 
 function useTypedPhrase() {
   const [index, setIndex] = useState(0);
