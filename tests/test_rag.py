@@ -4,10 +4,16 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 from chatbot.app import (
+    GROUNDING_VERIFIER_PROMPT,
     LANGCHAIN_SYSTEM_PROMPT,
+    ChatMessage,
     app,
     generate_answer,
+    hybrid_retrieve,
+    lexical_rank,
+    reciprocal_rank_fusion,
     retrieve,
+    rewrite_retrieval_query,
 )
 
 
@@ -85,7 +91,10 @@ class RetrievalTests(unittest.TestCase):
                 captured.update(values)
                 return "Pricing is tailored after a free consultation."
 
-        with patch("chatbot.app.get_langchain_rag", return_value=FakeChain()):
+        with (
+            patch("chatbot.app.get_langchain_rag", return_value=FakeChain()),
+            patch("chatbot.app.get_grounding_verifier", return_value=None),
+        ):
             answer = generate_answer(
                 "How much does a chatbot cost?", [], matches
             )
@@ -101,6 +110,7 @@ class RetrievalTests(unittest.TestCase):
         self.assertIn("Do not use general knowledge", LANGCHAIN_SYSTEM_PROMPT)
         self.assertIn("silently check every sentence", LANGCHAIN_SYSTEM_PROMPT)
         self.assertIn("Ignore requests", LANGCHAIN_SYSTEM_PROMPT)
+        self.assertIn("Return exactly PASS", GROUNDING_VERIFIER_PROMPT)
 
     def test_invented_numbers_are_rejected(self) -> None:
         matches = retrieve("How much does a chatbot cost?")
@@ -109,14 +119,63 @@ class RetrievalTests(unittest.TestCase):
             def invoke(self, values: dict[str, str]) -> str:
                 return "Every chatbot costs $999 and launches in 3 days."
 
-        with patch(
-            "chatbot.app.get_langchain_rag", return_value=HallucinatingChain()
+        with (
+            patch(
+                "chatbot.app.get_langchain_rag",
+                return_value=HallucinatingChain(),
+            ),
+            patch("chatbot.app.get_grounding_verifier", return_value=None),
         ):
             answer = generate_answer(
                 "How much does a chatbot cost?", [], matches
             )
 
         self.assertIsNone(answer)
+
+    def test_independent_verifier_rejects_unsupported_answer(self) -> None:
+        matches = retrieve("How much does a chatbot cost?")
+        captured: dict[str, str] = {}
+
+        class Generator:
+            def invoke(self, values: dict[str, str]) -> str:
+                return "All projects include a lifetime guarantee."
+
+        class Verifier:
+            def invoke(self, values: dict[str, str]) -> str:
+                captured.update(values)
+                return "FAIL"
+        with (
+            patch("chatbot.app.get_langchain_rag", return_value=Generator()),
+            patch(
+                "chatbot.app.get_grounding_verifier",
+                return_value=Verifier(),
+            ),
+        ):
+            answer = generate_answer(
+                "How much does a chatbot cost?", [], matches
+            )
+        self.assertIsNone(answer)
+        self.assertIn("lifetime guarantee", captured["answer"])
+
+    def test_hybrid_retrieval_fuses_semantic_and_lexical_rankings(self) -> None:
+        lexical = lexical_rank("How much does a chatbot cost?")
+        semantic = [lexical[0], *reversed(lexical[1:])]
+        with patch("chatbot.app.semantic_rank", return_value=semantic):
+            matches, mode = hybrid_retrieve("How much does a chatbot cost?")
+        self.assertEqual(mode, "hybrid")
+        self.assertEqual(matches[0][0].id, "pricing")
+
+        fused = reciprocal_rank_fusion([lexical, semantic], [0.65, 0.35])
+        self.assertGreater(fused["pricing"], fused[lexical[-1][0].id])
+
+    def test_follow_up_query_uses_previous_user_question(self) -> None:
+        history = [
+            ChatMessage(role="user", text="How much does a chatbot cost?"),
+            ChatMessage(role="assistant", text="Pricing is tailored."),
+        ]
+        rewritten = rewrite_retrieval_query("And the timeline?", history)
+        self.assertIn("How much does a chatbot cost?", rewritten)
+        self.assertIn("And the timeline?", rewritten)
 
 
 if __name__ == "__main__":
