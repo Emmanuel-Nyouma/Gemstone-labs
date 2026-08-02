@@ -52,7 +52,7 @@ type ChatMessage = {
 
 const CHAT_API_URL =
   process.env.NEXT_PUBLIC_CHAT_API_URL ??
-  (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
+  (process.env.NODE_ENV === "production" ? "" : "http://localhost:8002");
 
 function apiEndpoint(path: "chat" | "newsletter") {
   return CHAT_API_URL ? `${CHAT_API_URL}/${path}` : `/api/${path}`;

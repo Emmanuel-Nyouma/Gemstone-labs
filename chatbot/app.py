@@ -70,6 +70,8 @@ SYNONYMS = {
     "secure": ("security", "privacy"),
     "wrong": ("accuracy", "testing", "human"),
     "hallucinate": ("accuracy", "testing", "human"),
+    "invent": ("accuracy", "testing", "human", "hallucination"),
+    "fabricate": ("accuracy", "testing", "human", "hallucination"),
     "language": ("multilingual", "translation"),
     "connect": ("integration", "crm", "calendar"),
     "support": ("maintenance", "updates", "customers"),
@@ -98,6 +100,14 @@ SYNONYMS = {
     "faux": ("accuracy", "testing", "human", "hallucination"),
     "erreur": ("accuracy", "testing", "human"),
     "mak": ("accuracy", "testing", "human", "hallucination"),
+    "invente": ("accuracy", "testing", "human", "hallucination"),
+    "inventer": ("accuracy", "testing", "human", "hallucination"),
+    "diagnosis": ("medical", "professional", "human", "safety"),
+    "diagnose": ("medical", "professional", "human", "safety"),
+    "diagnostic": ("medical", "professional", "human", "safety"),
+    "medical": ("professional", "human", "safety"),
+    "medecin": ("medical", "professional", "human", "safety"),
+    "sante": ("medical", "professional", "human", "safety"),
 }
 
 INTENT_RULES = {
@@ -106,16 +116,20 @@ INTENT_RULES = {
         "phrases": {"how much", "combien coute", "quel prix", "quel tarif"},
     },
     "timeline": {
-        "tokens": {"timeline", "duration", "deadline", "weeks", "delai", "duree"},
+        "tokens": {"timeline", "duration", "deadline", "day", "days", "week", "weeks", "jour", "jours", "semaine", "semaines", "delai", "duree"},
         "phrases": {"how long", "combien de temps", "quel delai", "quelle duree"},
     },
     "accuracy": {
-        "tokens": {"accuracy", "accurate", "wrong", "hallucinate", "hallucination", "faux", "fausse", "erreur", "fiable"},
-        "phrases": {"wrong answer", "prevent errors", "eviter les erreurs", "reponse fausse"},
+        "tokens": {"accuracy", "accurate", "wrong", "hallucinate", "hallucination", "invent", "fabricate", "mak", "faux", "fausse", "erreur", "fiable", "invente", "inventer"},
+        "phrases": {"wrong answer", "making up", "make up answers", "invent answers", "prevent errors", "eviter les erreurs", "reponse fausse", "inventer des reponses"},
     },
     "privacy-security": {
         "tokens": {"privacy", "security", "secure", "safe", "data", "securise", "securite", "confidentialite", "donnee"},
         "phrases": {"personal data", "donnees personnelles", "est ce securise"},
+    },
+    "safety-limits": {
+        "tokens": {"medical", "diagnosis", "diagnose", "diagnostic", "health", "prescription", "lawyer", "legal", "financial", "medecin", "medicale", "medical", "sante", "juridique"},
+        "phrases": {"medical advice", "legal advice", "financial advice", "replace a doctor", "medical diagnosis", "diagnostic medical", "remplacer un medecin", "conseil juridique"},
     },
     "integrations": {
         "tokens": {"integration", "integrate", "connect", "crm", "calendar", "email", "api", "connecter"},
@@ -142,8 +156,8 @@ INTENT_RULES = {
         "phrases": {"how do you work", "comment travaillez vous", "comment ca marche"},
     },
     "services-chatbots": {
-        "tokens": {"chatbot", "chatbots", "assistant", "rag", "bot"},
-        "phrases": {"what do you do", "what do you offer", "que faites vous", "quels services"},
+        "tokens": {"chatbot", "chatbots", "assistant", "rag", "bot", "agency", "agence"},
+        "phrases": {"what do you do", "what exactly do", "what does gemstone labs do", "what do you offer", "tell me about gemstone labs", "que faites vous", "quels services", "presentez gemstone labs"},
     },
     "contact": {
         "tokens": {"contact", "book", "consultation", "email", "start", "commencer", "rendez", "contacter"},
@@ -153,9 +167,9 @@ INTENT_RULES = {
 
 FRENCH_FALLBACKS = {
     "services-chatbots": (
-        "Nous créons des assistants qui répondent à partir des informations "
-        "approuvées par votre entreprise. Ils peuvent guider les visiteurs, "
-        "qualifier les demandes et transmettre les cas sensibles à une personne."
+        "Gemstone Labs crée principalement des assistants qui répondent à partir "
+        "des informations approuvées par votre entreprise. Nous concevons aussi "
+        "des sites web professionnels, seuls ou associés à un assistant."
     ),
     "rag-explained": (
         "L'assistant consulte d'abord les informations validées par votre entreprise "
@@ -189,8 +203,9 @@ FRENCH_FALLBACKS = {
     ),
     "pricing": (
         "Le prix dépend du volume d'informations, des langues, des pages et des "
-        "intégrations nécessaires. Nous commençons par une conversation gratuite, "
-        "puis proposons le périmètre utile le plus simple avec un devis clair."
+        "intégrations nécessaires. Un prix ou un délai exact ne peut pas être "
+        "confirmé à partir d’une courte demande. Nous commençons par une conversation "
+        "gratuite, puis proposons le périmètre utile avec un devis et un calendrier clairs."
     ),
     "timeline": (
         "Un projet ciblé peut généralement être lancé en quelques semaines. Le "
@@ -201,6 +216,12 @@ FRENCH_FALLBACKS = {
         "Nous limitons les réponses aux informations approuvées, testons les "
         "questions difficiles et affichons une réponse prudente lorsque la confiance "
         "est faible. Les demandes sensibles ou incertaines sont transmises à une personne."
+    ),
+    "safety-limits": (
+        "Nos assistants ne sont pas conçus pour établir un diagnostic médical ni "
+        "remplacer le jugement d’un professionnel de santé, du droit ou de la "
+        "finance. Ils peuvent traiter des questions administratives approuvées et "
+        "orienter les demandes sensibles vers une personne qualifiée."
     ),
     "privacy-security": (
         "Nous évitons de demander des données sensibles inutiles et définissons avec "
@@ -230,9 +251,11 @@ FRENCH_FALLBACKS = {
 }
 
 FRENCH_MARKERS = {
-    "bonjour", "combien", "comment", "francais", "quel", "quelle", "peut",
-    "pouvez", "pourquoi", "votre", "vous", "cout", "prix", "delai", "duree",
-    "securise", "donnee", "site", "entreprise",
+    "bonjour", "combien", "comment", "francais", "quel", "quels", "quelle",
+    "quelles", "peut", "pouvez", "pourquoi", "propose", "votre", "vous",
+    "cout", "prix", "delai", "duree", "securise", "donnee", "donnees",
+    "personnelle", "personnelles", "vendue", "vendues", "site", "entreprise",
+    "diagnostic", "medical", "medecin", "sante",
 }
 
 
@@ -343,6 +366,22 @@ def smalltalk_answer(value: str) -> str | None:
     return None
 
 
+def refusal_answer(question: str) -> str:
+    if is_french(question):
+        return (
+            "Je n’ai pas suffisamment d’informations approuvées pour répondre "
+            "avec certitude. Je peux vous renseigner sur les assistants Gemstone "
+            "Labs, les sites web, notre méthode, les tarifs, la confidentialité "
+            "ou l’accompagnement — ou vous pouvez écrire à hello@gemstonelabs.ai."
+        )
+    return (
+        "I do not have enough approved information to answer that confidently. "
+        "I can help with Gemstone Labs services, websites, knowledge-powered "
+        "chatbots, process, pricing approach, privacy, or support—or you can "
+        "email hello@gemstonelabs.ai."
+    )
+
+
 DOCUMENT_TOKENS = [
     base_tokens(f"{chunk.title} {chunk.content} {' '.join(chunk.keywords)}")
     for chunk in KNOWLEDGE
@@ -385,6 +424,14 @@ def lexical_rank(question: str) -> list[tuple[KnowledgeChunk, float]]:
         )
         if token_hits or phrase_hits:
             boosts[chunk_id] += 0.7 * len(token_hits) + 1.4 * phrase_hits
+
+    if re.search(r"[$€£]|\b(?:usd|eur|dollars?|euros?)\b", question.lower()):
+        boosts["pricing"] += 2.8
+    if re.search(
+        r"\b\d+\s*(?:days?|weeks?|months?|jours?|semaines?|mois)\b",
+        normalized_question,
+    ):
+        boosts["timeline"] += 1.8
 
     vector = tfidf(query_tokens(question))
     return sorted(
@@ -794,12 +841,7 @@ def chat(request: ChatRequest) -> dict[str, object]:
     matches, retrieval_mode = hybrid_retrieve(retrieval_question)
     if not matches:
         return {
-            "answer": (
-                "I do not have enough approved information to answer that "
-                "confidently. I can help with Gemstone Labs services, websites, "
-                "knowledge-powered chatbots, process, pricing approach, privacy, "
-                "or support—or you can email hello@gemstonelabs.ai."
-            ),
+            "answer": refusal_answer(request.question),
             "sources": [],
             "confidence": "low",
             "mode": "grounded-retrieval",

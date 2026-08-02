@@ -32,7 +32,7 @@ Run the Python API separately when developing locally:
 
 ```bash
 python -m pip install -r chatbot/requirements.txt
-python -m uvicorn chatbot.app:app --reload --port 8000
+python -m uvicorn chatbot.app:app --reload --port 8002
 ```
 
 ## Environment variables

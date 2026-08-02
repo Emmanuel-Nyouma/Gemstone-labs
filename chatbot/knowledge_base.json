@@ -1,9 +1,9 @@
 [
   {
     "id": "services-chatbots",
-    "title": "Knowledge-powered chatbots",
-    "content": "Gemstone Labs builds customer-facing chatbots that answer from information a business approves, including service pages, product details, policies, guides, and frequently asked questions. The goal is to give visitors useful answers at any hour, guide them to the right service, capture qualified enquiries, and reduce repetitive support work. The assistant is designed around the business rather than being a generic chatbot.",
-    "keywords": ["chatbot", "RAG", "knowledge", "customer support", "lead generation", "questions"],
+    "title": "AI chatbots and business websites",
+    "content": "Gemstone Labs primarily builds customer-facing chatbots that answer from information a business approves. They help visitors get useful answers, find the right service, submit qualified enquiries, and reduce repetitive support work. Gemstone Labs also designs modern business websites, either as a standalone project or combined with a knowledge-powered chatbot.",
+    "keywords": ["services", "agency", "chatbot", "RAG", "knowledge", "website", "customer support", "lead generation"],
     "link": "/#services"
   },
   {
@@ -51,7 +51,7 @@
   {
     "id": "pricing",
     "title": "Flexible project pricing",
-    "content": "Gemstone Labs does not publish a fixed one-size-fits-all price. A focused website or starter chatbot costs less than a larger system with many pages, documents, languages, or integrations. We begin with a free conversation, recommend the simplest useful scope, and provide a clear proposal before work starts. Phased options are available for growing budgets.",
+    "content": "Gemstone Labs does not publish a fixed one-size-fits-all price. A focused website or starter chatbot costs less than a larger system with many pages, documents, languages, or integrations. An exact price or deadline cannot be confirmed from a short request: we begin with a free conversation, recommend the simplest useful scope, and provide a clear proposal with timing before work starts. Phased options are available for growing budgets.",
     "keywords": ["price", "pricing", "cost", "budget", "quote", "proposal", "payment"],
     "link": "/#pricing"
   },
@@ -67,6 +67,13 @@
     "title": "Accuracy and human handoff",
     "content": "No AI assistant should pretend to know what the business has not approved. Gemstone Labs limits answers to approved knowledge, tests difficult questions, adds clear uncertainty responses, and creates a route to a person when confidence is low or a request needs human judgement. Important prices, contracts, legal matters, and high-impact decisions should always be confirmed by a person.",
     "keywords": ["accuracy", "wrong answer", "hallucination", "human", "handoff", "confidence", "testing"],
+    "link": "/privacy#privacy-04"
+  },
+  {
+    "id": "safety-limits",
+    "title": "Professional and high-risk boundaries",
+    "content": "Gemstone Labs chatbots are not designed to diagnose medical conditions or replace qualified medical, legal, or financial judgement. For clinics and other regulated businesses, an assistant may handle approved non-medical or administrative questions and direct sensitive or high-impact matters to a qualified person. It should not request unnecessary health, payment, identity, or other sensitive information.",
+    "keywords": ["medical", "diagnosis", "health", "legal advice", "financial advice", "professional", "human handoff", "safety"],
     "link": "/privacy#privacy-04"
   },
   {

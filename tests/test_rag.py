@@ -32,7 +32,11 @@ class RetrievalTests(unittest.TestCase):
             "What do you do?": "services-chatbots",
             "Can it answer in French?": "languages",
             "What happens when it gives a wrong answer?": "accuracy",
+            "How do you stop it from making up answers?": "accuracy",
+            "What exactly does Gemstone Labs do?": "services-chatbots",
             "Is my personal data secure?": "privacy-security",
+            "Can it diagnose a medical condition?": "safety-limits",
+            "Can you build it in 3 days for $100?": "pricing",
         }
         for question, expected in cases.items():
             with self.subTest(question=question):
@@ -46,6 +50,7 @@ class RetrievalTests(unittest.TestCase):
             "Pouvez-vous créer un site internet ?": "websites",
             "Le chatbot peut-il parler français ?": "languages",
             "Comment évitez-vous les réponses fausses ?": "accuracy",
+            "Je veux un chatbot qui pose un diagnostic médical.": "safety-limits",
         }
         for question, expected in cases.items():
             with self.subTest(question=question):
@@ -81,6 +86,40 @@ class RetrievalTests(unittest.TestCase):
         data = response.json()
         self.assertEqual(data["confidence"], "low")
         self.assertEqual(data["sources"], [])
+
+    def test_french_questions_get_french_answers(self) -> None:
+        client = TestClient(app)
+        response = client.post(
+            "/chat",
+            json={"question": "Quels services propose Gemstone Labs ?", "history": []},
+        )
+        data = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("crée", data["answer"].lower())
+        self.assertNotIn("builds", data["answer"].lower())
+
+    def test_high_risk_request_has_professional_boundary(self) -> None:
+        client = TestClient(app)
+        response = client.post(
+            "/chat",
+            json={
+                "question": "Je veux un chatbot médical qui pose un diagnostic.",
+                "history": [],
+            },
+        )
+        data = response.json()
+        self.assertEqual(data["sources"][0]["title"], "Professional and high-risk boundaries")
+        self.assertIn("pas conçus", data["answer"].lower())
+
+    def test_french_out_of_scope_refusal_is_localized(self) -> None:
+        client = TestClient(app)
+        response = client.post(
+            "/chat",
+            json={"question": "Quelle météo fera-t-il demain ?", "history": []},
+        )
+        data = response.json()
+        self.assertEqual(data["confidence"], "low")
+        self.assertTrue(data["answer"].startswith("Je n’ai pas"))
 
     def test_langchain_receives_only_retrieved_knowledge(self) -> None:
         matches = retrieve("How much does a chatbot cost?")
