@@ -557,7 +557,14 @@ export default function Home() {
         <div className="socials" aria-label="Gemstone Labs social media">
           {socials.map(([name, href, slug]) => (
             <a href={href} target="_blank" rel="noreferrer" aria-label={name} key={name}>
-              <img src={`https://cdn.simpleicons.org/${slug}/c8f235`} alt="" />
+              <img
+                src={
+                  slug === "linkedin"
+                    ? "/linkedin.svg"
+                    : `https://cdn.simpleicons.org/${slug}/c8f235`
+                }
+                alt=""
+              />
               <span>{name}</span>
             </a>
           ))}
