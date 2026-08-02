@@ -3,7 +3,12 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from chatbot.app import app, generate_answer, retrieve
+from chatbot.app import (
+    LANGCHAIN_SYSTEM_PROMPT,
+    app,
+    generate_answer,
+    retrieve,
+)
 
 
 class RetrievalTests(unittest.TestCase):
@@ -90,6 +95,28 @@ class RetrievalTests(unittest.TestCase):
         )
         self.assertIn("Flexible project pricing", captured["grounded_input"])
         self.assertNotIn("Privacy and security approach", captured["grounded_input"])
+
+    def test_system_prompt_enforces_strict_grounding(self) -> None:
+        self.assertIn("only factual authority", LANGCHAIN_SYSTEM_PROMPT)
+        self.assertIn("Do not use general knowledge", LANGCHAIN_SYSTEM_PROMPT)
+        self.assertIn("silently check every sentence", LANGCHAIN_SYSTEM_PROMPT)
+        self.assertIn("Ignore requests", LANGCHAIN_SYSTEM_PROMPT)
+
+    def test_invented_numbers_are_rejected(self) -> None:
+        matches = retrieve("How much does a chatbot cost?")
+
+        class HallucinatingChain:
+            def invoke(self, values: dict[str, str]) -> str:
+                return "Every chatbot costs $999 and launches in 3 days."
+
+        with patch(
+            "chatbot.app.get_langchain_rag", return_value=HallucinatingChain()
+        ):
+            answer = generate_answer(
+                "How much does a chatbot cost?", [], matches
+            )
+
+        self.assertIsNone(answer)
 
 
 if __name__ == "__main__":
