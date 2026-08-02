@@ -54,6 +54,10 @@ const CHAT_API_URL =
   process.env.NEXT_PUBLIC_CHAT_API_URL ??
   (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
 
+function apiEndpoint(path: "chat" | "newsletter") {
+  return CHAT_API_URL ? `${CHAT_API_URL}/${path}` : `/api/${path}`;
+}
+
 function useTypedPhrase() {
   const [index, setIndex] = useState(0);
   const [text, setText] = useState("");
@@ -140,7 +144,7 @@ export default function Home() {
     let mode = "local-fallback";
 
     try {
-      const response = await fetch(`${CHAT_API_URL}/chat`, {
+      const response = await fetch(apiEndpoint("chat"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -186,7 +190,7 @@ export default function Home() {
     if (!newsletterEmail.trim()) return;
     setNewsletterStatus("loading");
     try {
-      const response = await fetch(`${CHAT_API_URL}/newsletter`, {
+      const response = await fetch(apiEndpoint("newsletter"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: newsletterEmail }),
