@@ -350,17 +350,31 @@ def is_french(value: str) -> bool:
 
 def smalltalk_answer(value: str) -> str | None:
     normalized = " ".join(re.findall(r"[a-z0-9]+", normalize_text(value)))
-    if normalized in {"hi", "hello", "hey", "good morning", "good afternoon"}:
+    if normalized in {
+        "hi", "hello", "hey", "yo", "hiya", "hey there", "hello there",
+        "sup", "what s up", "whats up", "good morning", "good afternoon",
+        "good evening",
+    }:
         return (
-            "Hello! I can help with Gemstone Labs chatbots, websites, pricing, "
-            "timelines, privacy, integrations, or support. What would you like to know?"
+            "Hey! I’m the Gemstone Guide. I can help with our AI chatbots, "
+            "business websites, pricing approach, timelines, privacy, or project "
+            "process. What would you like to explore?"
         )
-    if normalized in {"bonjour", "salut", "bonsoir"}:
+    if normalized in {"bonjour", "salut", "bonsoir", "coucou"}:
         return (
             "Bonjour ! Je peux vous renseigner sur les chatbots, les sites web, "
             "les tarifs, les délais, la confidentialité ou les intégrations de "
             "Gemstone Labs. Que souhaitez-vous savoir ?"
         )
+    if normalized in {"how are you", "how s it going", "how is it going"}:
+        return (
+            "I’m ready to help! Ask me anything about Gemstone Labs chatbots, "
+            "websites, pricing approach, or project process."
+        )
+    if normalized in {"ok", "okay", "cool", "great", "got it", "sounds good"}:
+        return "Great. What would you like to know next?"
+    if normalized in {"d accord", "ok merci", "tres bien", "compris"}:
+        return "Très bien. Que souhaitez-vous savoir ensuite ?"
     if normalized in {"thanks", "thank you", "merci", "merci beaucoup"}:
         return "Avec plaisir !" if is_french(value) else "You're welcome!"
     return None

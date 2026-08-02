@@ -87,6 +87,26 @@ class RetrievalTests(unittest.TestCase):
         self.assertEqual(data["confidence"], "low")
         self.assertEqual(data["sources"], [])
 
+    def test_casual_greetings_stay_conversational(self) -> None:
+        client = TestClient(app)
+        for greeting in ("yo", "what's up", "hello there"):
+            with self.subTest(greeting=greeting):
+                data = client.post(
+                    "/chat", json={"question": greeting, "history": []}
+                ).json()
+                self.assertEqual(data["mode"], "conversation")
+                self.assertEqual(data["confidence"], "high")
+                self.assertEqual(data["sources"], [])
+                self.assertIn("Gemstone Guide", data["answer"])
+
+    def test_acknowledgements_do_not_trigger_a_refusal(self) -> None:
+        client = TestClient(app)
+        data = client.post(
+            "/chat", json={"question": "ok", "history": []}
+        ).json()
+        self.assertEqual(data["mode"], "conversation")
+        self.assertNotIn("approved information", data["answer"].lower())
+
     def test_french_questions_get_french_answers(self) -> None:
         client = TestClient(app)
         response = client.post(
