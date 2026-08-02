@@ -1,8 +1,9 @@
 import unittest
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from chatbot.app import app, retrieve
+from chatbot.app import app, generate_answer, retrieve
 
 
 class RetrievalTests(unittest.TestCase):
@@ -69,6 +70,26 @@ class RetrievalTests(unittest.TestCase):
         data = response.json()
         self.assertEqual(data["confidence"], "low")
         self.assertEqual(data["sources"], [])
+
+    def test_langchain_receives_only_retrieved_knowledge(self) -> None:
+        matches = retrieve("How much does a chatbot cost?")
+        captured: dict[str, str] = {}
+
+        class FakeChain:
+            def invoke(self, values: dict[str, str]) -> str:
+                captured.update(values)
+                return "Pricing is tailored after a free consultation."
+
+        with patch("chatbot.app.get_langchain_rag", return_value=FakeChain()):
+            answer = generate_answer(
+                "How much does a chatbot cost?", [], matches
+            )
+
+        self.assertEqual(
+            answer, "Pricing is tailored after a free consultation."
+        )
+        self.assertIn("Flexible project pricing", captured["grounded_input"])
+        self.assertNotIn("Privacy and security approach", captured["grounded_input"])
 
 
 if __name__ == "__main__":

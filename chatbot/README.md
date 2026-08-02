@@ -1,9 +1,9 @@
-# Gemstone Labs FAQ assistant
+# Gemstone Labs LangChain RAG
 
 This Python service retrieves the strongest matching sections from the approved
-agency knowledge base. With a Gemini API key, those passages are passed to
-Gemini 3.5 Flash-Lite to create a concise, natural answer. Without a key, it
-returns the best approved passage rather than inventing an answer.
+agency knowledge base. LangChain then sends only those passages to Gemini 3.5
+Flash-Lite for a concise, source-grounded answer. Without a key, it returns a
+curated approved answer rather than inventing unsupported information.
 
 Start it locally from this folder:
 
