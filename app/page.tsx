@@ -559,8 +559,8 @@ export default function Home() {
           </div>
           <div className="footer-column">
             <h3>Services</h3>
-            <a href="#services">RAG chatbots</a><a href="#services">Voice AI agents</a>
-            <a href="#services">Business websites</a>
+            <a href="/ai-chatbots">RAG chatbots</a><a href="/voice-ai-agents">Voice AI agents</a>
+            <a href="/business-websites">Business websites</a>
             <a href="#contact">Support</a>
           </div>
           <div className="footer-column">
