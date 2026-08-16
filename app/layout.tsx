@@ -6,16 +6,18 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gemstone-labs.verce
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Gemstone Labs | AI Chatbots and Business Websites",
+    default: "Gemstone Labs | AI Chatbots, Voice Agents and Websites",
     template: "%s | Gemstone Labs",
   },
   description:
-    "Gemstone Labs builds grounded AI chatbots and conversion-focused business websites that turn customer questions into qualified enquiries.",
+    "Gemstone Labs builds grounded AI chatbots, voice agents, and conversion-focused business websites that turn customer questions into qualified enquiries.",
   keywords: [
     "AI chatbot agency",
     "RAG chatbot for business",
     "business website agency",
     "customer support chatbot",
+    "voice AI agent",
+    "voice chatbot for business",
     "Gemstone Labs",
   ],
   alternates: { canonical: "/" },
@@ -23,15 +25,15 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: "Gemstone Labs",
-    title: "Gemstone Labs | AI Chatbots and Business Websites",
+    title: "Gemstone Labs | AI Chatbots, Voice Agents and Websites",
     description:
-      "Grounded AI chatbots and conversion-focused business websites for clearer customer journeys.",
+      "Grounded AI chatbots, voice agents, and conversion-focused business websites for clearer customer journeys.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gemstone Labs | AI Chatbots and Business Websites",
+    title: "Gemstone Labs | AI Chatbots, Voice Agents and Websites",
     description:
-      "Grounded AI chatbots and conversion-focused business websites for clearer customer journeys.",
+      "Grounded AI chatbots, voice agents, and conversion-focused business websites for clearer customer journeys.",
   },
   robots: {
     index: true,
@@ -55,7 +57,7 @@ export default function RootLayout({
         logo: `${siteUrl}/favicon.svg`,
         email: "hello@gemstonelabs.ai",
         description:
-          "Gemstone Labs builds grounded AI chatbots and business websites.",
+          "Gemstone Labs builds grounded AI chatbots, voice agents, and business websites.",
       },
       {
         "@type": "WebSite",

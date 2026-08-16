@@ -60,6 +60,13 @@ SYNONYMS = {
     "expensive": ("price", "pricing", "budget"),
     "fee": ("price", "pricing", "payment"),
     "bot": ("chatbot", "assistant"),
+    "voice": ("assistant", "spoken", "call", "phone"),
+    "vocal": ("voice", "assistant", "call"),
+    "voix": ("voice", "assistant", "call"),
+    "call": ("voice", "phone", "assistant"),
+    "telephone": ("voice", "phone", "call"),
+    "téléphone": ("voice", "phone", "call"),
+    "appel": ("voice", "phone", "call"),
     "rag": ("chatbot", "knowledge", "retrieval"),
     "ai": ("chatbot", "assistant", "knowledge"),
     "site": ("website", "web"),
@@ -143,6 +150,10 @@ INTENT_RULES = {
         "tokens": {"website", "websites", "webpage", "landing", "redesign", "responsive", "site"},
         "phrases": {"build websites", "make websites", "creer un site", "refaire mon site"},
     },
+    "voice-ai-agents": {
+        "tokens": {"voice", "vocal", "voix", "spoken", "phone", "telephone", "call", "calls", "audio", "assistant", "agent", "appel", "appels"},
+        "phrases": {"voice ai", "voice agent", "phone agent", "call assistant", "assistant vocal", "agent vocal", "agent voix"},
+    },
     "support": {
         "tokens": {"support", "maintenance", "update", "updates", "monitoring", "suivi"},
         "phrases": {"after launch", "apres le lancement"},
@@ -222,6 +233,13 @@ FRENCH_FALLBACKS = {
         "remplacer le jugement d’un professionnel de santé, du droit ou de la "
         "finance. Ils peuvent traiter des questions administratives approuvées et "
         "orienter les demandes sensibles vers une personne qualifiée."
+    ),
+    "voice-ai-agents": (
+        "Nous pouvons concevoir des agents vocaux qui permettent aux clients de "
+        "parler naturellement avec votre entreprise. Ils peuvent répondre aux "
+        "questions approuvées, qualifier les demandes et transmettre les situations "
+        "sensibles à une personne. Le canal vocal, les langues et les intégrations "
+        "dépendent du projet."
     ),
     "privacy-security": (
         "Nous évitons de demander des données sensibles inutiles et définissons avec "

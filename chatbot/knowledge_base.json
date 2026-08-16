@@ -77,6 +77,13 @@
     "link": "/privacy#privacy-04"
   },
   {
+    "id": "voice-ai-agents",
+    "title": "Voice AI agents",
+    "content": "Gemstone Labs can design voice AI agents that let customers speak naturally with a business through approved conversation flows and business information. A voice agent can answer common questions, qualify enquiries, route requests, and hand sensitive or uncertain matters to a person. The exact voice channel, integrations, languages, and availability depend on the project and are confirmed in the proposal.",
+    "keywords": ["voice AI", "voice agent", "phone agent", "call assistant", "spoken conversation", "voice support", "telephone"],
+    "link": "/voice-ai-agents"
+  },
+  {
     "id": "privacy-security",
     "title": "Privacy and security approach",
     "content": "Gemstone Labs designs public assistants to avoid requesting passwords, payment-card details, health information, government identifiers, or other unnecessary sensitive data. Client projects define approved knowledge, providers, access, retention, and privacy notices. Personal information is handled only for legitimate service, project, security, or legal needs and is not sold.",

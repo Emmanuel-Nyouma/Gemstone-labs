@@ -12,6 +12,7 @@ const heroPhrases = [
 
 const sampleQuestions = [
   "How could a chatbot help my business?",
+  "Can you build a voice AI agent?",
   "How do you prevent wrong answers?",
   "Can it work in French and English?",
   "How is pricing decided?",
@@ -26,6 +27,8 @@ const localAnswers: Record<string, string> = {
     "Yes. Multilingual experiences can be included, with human review of important translated business information.",
   "how is pricing decided?":
     "Pricing depends on the outcome, amount of business knowledge, languages, pages, and integrations. We recommend the simplest useful starting point first.",
+  "can you build a voice ai agent?":
+    "Yes. We can design a voice AI agent that answers approved questions, qualifies enquiries, and hands sensitive or uncertain conversations to a person. The voice channel, languages, and integrations are scoped around your project.",
 };
 
 const socials = [
@@ -254,9 +257,9 @@ export default function Home() {
 
       <div className="marquee" aria-hidden="true">
         <div>
-          RAG CHATBOTS <b>✦</b> BUSINESS WEBSITES <b>✦</b> CUSTOMER SUPPORT
-          <b>✦</b> LEAD GENERATION <b>✦</b> RAG CHATBOTS <b>✦</b> BUSINESS
-          WEBSITES <b>✦</b> CUSTOMER SUPPORT <b>✦</b> LEAD GENERATION <b>✦</b>
+          RAG CHATBOTS <b>✦</b> VOICE AI AGENTS <b>✦</b> BUSINESS WEBSITES
+          <b>✦</b> CUSTOMER SUPPORT <b>✦</b> LEAD GENERATION <b>✦</b> RAG
+          CHATBOTS <b>✦</b> VOICE AI AGENTS <b>✦</b> BUSINESS WEBSITES <b>✦</b>
         </div>
       </div>
 
@@ -291,6 +294,18 @@ export default function Home() {
                 next step obvious on every screen.
               </p>
               <small>Designed to convert</small>
+            </div>
+            <b>↗</b>
+          </article>
+          <article className="service">
+            <span>03</span>
+            <div>
+              <h3>Voice AI agents</h3>
+              <p>
+                Let customers speak naturally with an agent that answers,
+                qualifies enquiries, and knows when a person should take over.
+              </p>
+              <small>Natural conversations, carefully scoped</small>
             </div>
             <b>↗</b>
           </article>
@@ -544,7 +559,8 @@ export default function Home() {
           </div>
           <div className="footer-column">
             <h3>Services</h3>
-            <a href="#services">RAG chatbots</a><a href="#services">Business websites</a>
+            <a href="#services">RAG chatbots</a><a href="#services">Voice AI agents</a>
+            <a href="#services">Business websites</a>
             <a href="#contact">Support</a>
           </div>
           <div className="footer-column">

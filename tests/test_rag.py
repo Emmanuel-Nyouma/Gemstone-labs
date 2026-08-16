@@ -37,6 +37,7 @@ class RetrievalTests(unittest.TestCase):
             "Is my personal data secure?": "privacy-security",
             "Can it diagnose a medical condition?": "safety-limits",
             "Can you build it in 3 days for $100?": "pricing",
+            "Can you build a voice AI agent?": "voice-ai-agents",
         }
         for question, expected in cases.items():
             with self.subTest(question=question):
@@ -51,6 +52,7 @@ class RetrievalTests(unittest.TestCase):
             "Le chatbot peut-il parler français ?": "languages",
             "Comment évitez-vous les réponses fausses ?": "accuracy",
             "Je veux un chatbot qui pose un diagnostic médical.": "safety-limits",
+            "Avez-vous des agents vocaux ?": "voice-ai-agents",
         }
         for question, expected in cases.items():
             with self.subTest(question=question):
@@ -75,6 +77,17 @@ class RetrievalTests(unittest.TestCase):
         data = response.json()
         self.assertEqual(data["sources"][0]["title"], "Flexible project pricing")
         self.assertIn("prix", data["answer"].lower())
+
+    def test_api_returns_voice_agent_answer(self) -> None:
+        client = TestClient(app)
+        response = client.post(
+            "/chat",
+            json={"question": "Can you build a voice AI agent?", "history": []},
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["sources"][0]["title"], "Voice AI agents")
+        self.assertIn("voice", data["answer"].lower())
 
     def test_api_refuses_out_of_scope_question(self) -> None:
         client = TestClient(app)
