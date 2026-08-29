@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/tmp/
 
 # python
 __pycache__/
@@ -39,8 +40,6 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-!chatbot/.env.example
-chatbot/newsletter.db
 
 # vercel
 .vercel

@@ -18,19 +18,6 @@ const sampleQuestions = [
   "How is pricing decided?",
 ];
 
-const localAnswers: Record<string, string> = {
-  "how could a chatbot help my business?":
-    "It can answer common questions, guide visitors to the right service, capture enquiries, and free your team from repeating the same information.",
-  "how do you prevent wrong answers?":
-    "We limit answers to information your business approves, test difficult questions, and send uncertain or sensitive requests to a person.",
-  "can it work in french and english?":
-    "Yes. Multilingual experiences can be included, with human review of important translated business information.",
-  "how is pricing decided?":
-    "Pricing depends on the outcome, amount of business knowledge, languages, pages, and integrations. We recommend the simplest useful starting point first.",
-  "can you build a voice ai agent?":
-    "Yes. We can design a voice AI agent that answers approved questions, qualifies enquiries, and hands sensitive or uncertain conversations to a person. The voice channel, languages, and integrations are scoped around your project.",
-};
-
 const socials = [
   ["TikTok", "https://www.tiktok.com", "tiktok"],
   ["Instagram", "https://www.instagram.com", "instagram"],
@@ -44,21 +31,19 @@ const socials = [
   ["YouTube", "https://www.youtube.com", "youtube"],
 ];
 
-type Source = { title: string; link: string };
 type ChatMessage = {
   sender: "bot" | "user";
   text: string;
-  sources?: Source[];
-  confidence?: "low" | "medium" | "high";
-  mode?: string;
 };
 
-const CHAT_API_URL =
-  process.env.NEXT_PUBLIC_CHAT_API_URL ??
-  (process.env.NODE_ENV === "production" ? "" : "http://localhost:8002");
+const N8N_CHAT_WEBHOOK_URL =
+  "https://nj4561.app.n8n.cloud/webhook/bded34de-5897-4fac-943c-b0f884a65591/chat";
+const NEWSLETTER_API_URL = process.env.NEXT_PUBLIC_NEWSLETTER_API_URL ?? "";
 
-function apiEndpoint(path: "chat" | "newsletter") {
-  return CHAT_API_URL ? `${CHAT_API_URL}/${path}` : `/api/${path}`;
+function newsletterEndpoint() {
+  return NEWSLETTER_API_URL
+    ? `${NEWSLETTER_API_URL}/newsletter`
+    : "/api/newsletter";
 }
 
 function useTypedPhrase() {
@@ -105,6 +90,7 @@ export default function Home() {
     "idle" | "loading" | "success" | "error"
   >("idle");
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatSessionIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -140,47 +126,28 @@ export default function Home() {
     setThinking(true);
 
     let answer =
-      localAnswers[cleanQuestion.toLowerCase()] ??
-      "I do not have enough approved information to answer that confidently. Ask me about chatbots, websites, pricing, languages, privacy, or support.";
-    let sources: Source[] = [];
-    let confidence: ChatMessage["confidence"] = "low";
-    let mode = "local-fallback";
+      "The live assistant is temporarily unavailable. Please try again in a moment.";
 
     try {
-      const response = await fetch(apiEndpoint("chat"), {
+      chatSessionIdRef.current ??= crypto.randomUUID();
+      const response = await fetch(N8N_CHAT_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          question: cleanQuestion,
-          history: messages.slice(-6).map((message) => ({
-            role: message.sender === "bot" ? "assistant" : "user",
-            text: message.text,
-          })),
+          chatInput: cleanQuestion,
+          sessionId: chatSessionIdRef.current,
         }),
       });
-      if (response.ok) {
-        const data = (await response.json()) as {
-          answer?: string;
-          sources?: Source[];
-          confidence?: ChatMessage["confidence"];
-          mode?: string;
-        };
-        if (data.answer) answer = data.answer;
-        sources = data.sources ?? [];
-        confidence = data.confidence ?? "medium";
-        mode = data.mode ?? "grounded-retrieval";
-      }
+      if (!response.ok) throw new Error("n8n chat request failed");
+      const data = (await response.json()) as { output?: string };
+      if (!data.output) throw new Error("n8n chat response missing output");
+      answer = data.output;
     } catch {
-      // Curated fallback keeps the demo useful while the Python service is offline.
+      // Do not fabricate a response when the grounded workflow is unavailable.
     }
 
-    window.setTimeout(() => {
-      setMessages((current) => [
-        ...current,
-        { sender: "bot", text: answer, sources, confidence, mode },
-      ]);
-      setThinking(false);
-    }, 350);
+    setMessages((current) => [...current, { sender: "bot", text: answer }]);
+    setThinking(false);
   }
 
   function submitQuestion(event: FormEvent) {
@@ -193,7 +160,7 @@ export default function Home() {
     if (!newsletterEmail.trim()) return;
     setNewsletterStatus("loading");
     try {
-      const response = await fetch(apiEndpoint("newsletter"), {
+      const response = await fetch(newsletterEndpoint(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: newsletterEmail }),
@@ -379,22 +346,12 @@ export default function Home() {
               <strong>Gemstone Guide</strong>
               <span><i /> Grounded in approved knowledge</span>
             </div>
-            <small className="rag-badge">GEMINI RAG</small>
+            <small className="rag-badge">GRAPH RAG</small>
           </div>
           <div className="chat-messages" aria-live="polite">
             {messages.map((message, index) => (
               <div className={`message ${message.sender}`} key={`${message.text}-${index}`}>
                 <p>{message.text}</p>
-                {message.sender === "bot" && message.sources && message.sources.length > 0 && (
-                  <div className="answer-sources">
-                    <span>Based on:</span>
-                    {message.sources.map((source) => (
-                      <a href={source.link} key={`${source.title}-${index}`}>
-                        {source.title}
-                      </a>
-                    ))}
-                  </div>
-                )}
               </div>
             ))}
             {thinking && <div className="message bot thinking"><b /><b /><b /></div>}
