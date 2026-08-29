@@ -26,6 +26,8 @@ npm run dev
 
 ## Environment variables
 
+- `NEXT_PUBLIC_N8N_CHAT_WEBHOOK_URL` — optional override for the published n8n
+  Graph RAG chat webhook.
 - `NEXT_PUBLIC_NEWSLETTER_API_URL` — optional external newsletter endpoint.
 
 ## Verification

@@ -37,6 +37,7 @@ type ChatMessage = {
 };
 
 const N8N_CHAT_WEBHOOK_URL =
+  process.env.NEXT_PUBLIC_N8N_CHAT_WEBHOOK_URL ??
   "https://nj4561.app.n8n.cloud/webhook/bded34de-5897-4fac-943c-b0f884a65591/chat";
 const NEWSLETTER_API_URL = process.env.NEXT_PUBLIC_NEWSLETTER_API_URL ?? "";
 
