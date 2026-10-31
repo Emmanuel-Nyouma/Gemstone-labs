@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Gemstone Labs",
+  title: "Privacy Policy — SmartG Automation",
   description:
-    "How Gemstone Labs collects, uses, protects, and respects personal information.",
+    "How SmartG Automation collects, uses, protects, and respects personal information.",
 };
 
 const sections = [
@@ -25,8 +25,8 @@ export default function PrivacyPolicy() {
   return (
     <main className="legal-page">
       <nav className="legal-nav">
-        <a className="brand" href="/" aria-label="Gemstone Labs home">
-          <span className="brand-mark">✦</span> GEMSTONE LABS
+        <a className="brand" href="/" aria-label="SmartG Automation home">
+          <span className="brand-mark">✦</span> SMARTG AUTOMATION
         </a>
         <a className="legal-back" href="/">Back to website <span>↗</span></a>
       </nav>
@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
         <div className="legal-summary">
           <p>
             We believe privacy information should be as clear as the products
-            we build. This policy explains what Gemstone Labs may collect, why
+            we build. This policy explains what SmartG Automation may collect, why
             we use it, and the choices available to you.
           </p>
           <span>Last updated: July 26, 2026</span>
@@ -68,11 +68,11 @@ export default function PrivacyPolicy() {
             <span className="legal-number">01</span>
             <h2>Who we are</h2>
             <p>
-              Gemstone Labs (“Gemstone Labs,” “we,” “us,” or “our”) provides
+              SmartG Automation (“SmartG Automation,” “we,” “us,” or “our”) provides
               business website design and knowledge-powered chatbot services.
               For questions about this policy or your personal information,
               contact us at{" "}
-              <a href="mailto:hello@gemstonelabs.ai">hello@gemstonelabs.ai</a>.
+              <a href="mailto:hello@smartg.agency">hello@smartg.agency</a>.
             </p>
           </section>
 
@@ -119,7 +119,7 @@ export default function PrivacyPolicy() {
             <h2>Chatbots and AI-assisted services</h2>
             <p>
               Our website assistant is designed to answer questions about
-              Gemstone Labs and our services. Its responses are informational
+              SmartG Automation and our services. Its responses are informational
               and may be incomplete. Important project, pricing, legal, or
               business decisions are confirmed by a person.
             </p>
@@ -215,7 +215,7 @@ export default function PrivacyPolicy() {
             </p>
             <p>
               To make a request, email{" "}
-              <a href="mailto:hello@gemstonelabs.ai">hello@gemstonelabs.ai</a>.
+              <a href="mailto:hello@smartg.agency">hello@smartg.agency</a>.
               We may need to verify your identity. We will respond within the
               period required by applicable law.
             </p>
@@ -255,7 +255,7 @@ export default function PrivacyPolicy() {
             </p>
             <div className="legal-contact">
               <strong>Privacy questions or requests</strong>
-              <a href="mailto:hello@gemstonelabs.ai">hello@gemstonelabs.ai ↗</a>
+              <a href="mailto:hello@smartg.agency">hello@smartg.agency ↗</a>
             </div>
           </section>
         </article>
@@ -263,10 +263,10 @@ export default function PrivacyPolicy() {
 
       <footer className="legal-footer">
         <a className="brand" href="/">
-          <span className="brand-mark">✦</span> GEMSTONE LABS
+          <span className="brand-mark">✦</span> SMARTG AUTOMATION
         </a>
         <div><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
-        <span>© 2026 Gemstone Labs</span>
+        <span>© 2026 SmartG Automation</span>
       </footer>
     </main>
   );

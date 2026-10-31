@@ -1,4 +1,4 @@
-"""Vercel entrypoint for the Gemstone Labs Python API."""
+"""Vercel entrypoint for the SmartG Automation Python API."""
 
 """Small newsletter-only API kept after the legacy chatbot was removed."""
 
@@ -10,8 +10,8 @@ from pathlib import Path
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-app = FastAPI(title="Gemstone Labs website API")
-NEWSLETTER_DB = Path("/tmp/gemstone-newsletter.db")
+app = FastAPI(title="SmartG Automation website API")
+NEWSLETTER_DB = Path("/tmp/smartg-newsletter.db")
 
 
 class NewsletterRequest(BaseModel):

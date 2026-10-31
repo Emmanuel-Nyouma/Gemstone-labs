@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Gemstone Labs",
+  title: "Terms of Service — SmartG Automation",
   description:
-    "Terms governing use of the Gemstone Labs website and agency services.",
+    "Terms governing use of the SmartG Automation website and agency services.",
 };
 
 const sections = [
@@ -27,8 +27,8 @@ export default function TermsOfService() {
   return (
     <main className="legal-page">
       <nav className="legal-nav">
-        <a className="brand" href="/" aria-label="Gemstone Labs home">
-          <span className="brand-mark">✦</span> GEMSTONE LABS
+        <a className="brand" href="/" aria-label="SmartG Automation home">
+          <span className="brand-mark">✦</span> SMARTG AUTOMATION
         </a>
         <a className="legal-back" href="/">Back to website <span>↗</span></a>
       </nav>
@@ -39,7 +39,7 @@ export default function TermsOfService() {
         <div className="legal-summary">
           <p>
             These terms explain the rules for using our website and the
-            foundation of working with Gemstone Labs. Every paid project will
+            foundation of working with SmartG Automation. Every paid project will
             also have a proposal or service agreement with its specific scope.
           </p>
           <span>Last updated: July 26, 2026</span>
@@ -72,7 +72,7 @@ export default function TermsOfService() {
             <h2>Acceptance of these terms</h2>
             <p>
               These Terms of Service (“Terms”) apply when you access the
-              Gemstone Labs website, use its chatbot, contact us, or purchase a
+              SmartG Automation website, use its chatbot, contact us, or purchase a
               service. By using the website, you agree to these Terms. If you
               do not agree, please do not use the website.
             </p>
@@ -86,7 +86,7 @@ export default function TermsOfService() {
             <span className="legal-number">02</span>
             <h2>Our services</h2>
             <p>
-              Gemstone Labs provides website strategy, messaging, design,
+              SmartG Automation provides website strategy, messaging, design,
               development, knowledge-powered chatbots, automation, support,
               maintenance, and related advisory services. Website descriptions
               are general and do not guarantee that every feature is included
@@ -155,7 +155,7 @@ export default function TermsOfService() {
             <p>
               Ownership or licence rights in custom final deliverables will be
               stated in the project agreement and generally transfer only
-              after full payment. Gemstone Labs retains ownership of its
+              after full payment. SmartG Automation retains ownership of its
               pre-existing tools, methods, reusable code, templates,
               know-how, and general skills. Third-party materials remain
               subject to their own licences.
@@ -291,7 +291,7 @@ export default function TermsOfService() {
             </p>
             <div className="legal-contact">
               <strong>Questions about these Terms</strong>
-              <a href="mailto:hello@gemstonelabs.ai">hello@gemstonelabs.ai ↗</a>
+              <a href="mailto:hello@smartg.agency">hello@smartg.agency ↗</a>
             </div>
           </section>
         </article>
@@ -299,10 +299,10 @@ export default function TermsOfService() {
 
       <footer className="legal-footer">
         <a className="brand" href="/">
-          <span className="brand-mark">✦</span> GEMSTONE LABS
+          <span className="brand-mark">✦</span> SMARTG AUTOMATION
         </a>
         <div><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
-        <span>© 2026 Gemstone Labs</span>
+        <span>© 2026 SmartG Automation</span>
       </footer>
     </main>
   );

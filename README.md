@@ -1,6 +1,6 @@
-# Gemstone Labs
+# SmartG Automation
 
-Marketing website and grounded Graph RAG demo for Gemstone Labs. The web app is
+Marketing website and grounded Graph RAG demo for SmartG Automation. The web app is
 built with Next.js; the live-demo assistant calls the published n8n workflow.
 
 ## RAG workflow

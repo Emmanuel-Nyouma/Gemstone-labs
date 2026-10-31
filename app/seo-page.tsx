@@ -12,7 +12,7 @@ export function SeoPage({ eyebrow, title, intro, sections }: SeoPageProps) {
     <main className="seo-page">
       <nav className="nav" aria-label="Primary navigation">
         <Link className="brand" href="/">
-          <span className="brand-mark">◆</span> GEMSTONE LABS
+          <span className="brand-mark">✦</span> SMARTG AUTOMATION
         </Link>
         <Link className="nav-cta" href="/#contact">Let&apos;s talk <span>↗</span></Link>
       </nav>
@@ -38,7 +38,7 @@ export function SeoPage({ eyebrow, title, intro, sections }: SeoPageProps) {
           <p className="eyebrow">A useful next step</p>
           <h2>Bring us the question your team answers every day.</h2>
           <p>We&apos;ll help you decide whether a chatbot, a website, or a focused combination is the simplest place to start.</p>
-          <Link className="button primary" href="/#contact">Talk to Gemstone Labs <span>↗</span></Link>
+          <Link className="button primary" href="/#contact">Talk to SmartG Automation <span>↗</span></Link>
         </aside>
       </article>
     </main>

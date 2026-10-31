@@ -4,7 +4,7 @@ import { SeoPage } from "../seo-page";
 export const metadata: Metadata = {
   title: "Voice AI Agents for Businesses",
   description:
-    "Gemstone Labs designs voice AI agents for natural customer conversations, enquiry qualification, and thoughtful human handoff.",
+    "SmartG Automation designs voice AI agents for natural customer conversations, enquiry qualification, and thoughtful human handoff.",
   alternates: { canonical: "/voice-ai-agents" },
 };
 
@@ -13,7 +13,7 @@ export default function VoiceAiAgentsPage() {
     <SeoPage
       eyebrow="Voice AI agents"
       title="Make it easier for customers to get help by simply speaking."
-      intro="Gemstone Labs designs carefully scoped voice experiences that help customers ask questions naturally, reach the right next step, and connect with a person when the moment needs human judgement."
+      intro="SmartG Automation designs carefully scoped voice experiences that help customers ask questions naturally, reach the right next step, and connect with a person when the moment needs human judgement."
       sections={[
         {
           title: "Natural conversations",
