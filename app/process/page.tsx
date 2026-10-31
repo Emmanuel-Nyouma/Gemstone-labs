@@ -3,7 +3,7 @@ import { SeoPage } from "../seo-page";
 
 export const metadata: Metadata = {
   title: "Our AI Chatbot and Website Process",
-  description: "See how Gemstone Labs moves from discovery to a tested, useful AI chatbot or business website.",
+  description: "See how SmartG Automation moves from discovery to a tested, useful AI chatbot or business website.",
   alternates: { canonical: "/process" },
 };
 
